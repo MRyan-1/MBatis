@@ -34,4 +34,13 @@ public interface SqlSession {
      * @return
      */
     public <T> T selectOne(String statementId, Object... params) throws SQLException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException;
+
+    /**
+     * 采用代理模式来为dao创建接⼝的代理对象 并返回
+     *
+     * @param mapperClass
+     * @param <T>
+     * @return
+     */
+    public <T> T getMapper(Class<?> mapperClass);
 }

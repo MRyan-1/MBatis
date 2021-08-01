@@ -1,4 +1,5 @@
 
+import dao.IUserDao;
 import io.Resource;
 import org.dom4j.DocumentException;
 import org.junit.Test;
@@ -32,9 +33,20 @@ public class MyBatisTest {
         User user = new User();
         user.setId(2);
         user.setUsername("MRyan");
-        List<User> userList = sqlSession.selectList("user.selectList", user);
+       /*  List<User> userList = sqlSession.selectList("user.selectList", user);
         for (User user1 : userList) {
             System.out.println(user1.toString());
-        }
+        }*/
+        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
+        List<User> allUserList = userDao.findAll();
+        User userByCondition = userDao.findByCondition(user);
+        //findAll 查询所有
+        System.out.println("findAll 查询所有");
+        allUserList.forEach(item -> System.out.println(item.toString()));
+        //findByCondition 按照条件查询
+        System.out.println("findByCondition 按照条件查询");
+        System.out.println(userByCondition.toString());
     }
+
+
 }

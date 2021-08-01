@@ -12,8 +12,14 @@ import java.util.List;
  */
 public class BoundSql {
 
+    /**
+     * 解析后的sql语句
+     */
     private String sqlText;
 
+    /**
+     * 解析出来的参数
+     */
     private List<ParameterMapping> parameterMappingList;
 
     public BoundSql(String sqlText, List<ParameterMapping> parameterMappingList) {

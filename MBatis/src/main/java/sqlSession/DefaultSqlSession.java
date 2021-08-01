@@ -4,7 +4,7 @@ import pojo.Configuration;
 import pojo.MapperStatement;
 
 import java.beans.IntrospectionException;
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.*;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -38,5 +38,27 @@ public class DefaultSqlSession implements SqlSession {
         } else {
             throw new RuntimeException("查询结果为空/返回结果过多");
         }
+    }
+
+    @Override
+    public <T> T getMapper(Class<?> mapperClass) {
+        //使用JDK动态代理 为Dao接口生成代理对象
+        Object proxyInstance = Proxy.newProxyInstance(DefaultSqlSession.class.getClassLoader(), new Class[]{mapperClass}, new InvocationHandler() {
+            @Override
+            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                //方法名
+                String methodName = method.getName();
+                //接口全限定名
+                String className = method.getDeclaringClass().getName();
+                //statementId:sql语句唯一标识 =namespace.id=接口全限定名.方法名
+                String statementId = className + "." + methodName;
+                Type genericReturnType = method.getGenericReturnType();
+                if (genericReturnType instanceof ParameterizedType) {
+                    return selectList(statementId, args);
+                }
+                return selectOne(statementId, args);
+            }
+        });
+        return (T) proxyInstance;
     }
 }

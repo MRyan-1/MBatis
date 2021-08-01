@@ -30,6 +30,7 @@ sqlMapperConfig.xml -> 存放数据源信息 并集合所有mapper.xml
 3. SqlSession接⼝及实现类DefaultSession： 定义数据库crud操作⽅法
 4. Executor接口和实现类SimpleExecutor实现类  
     - 底层封装JDBC完成对数据库表的操作 执行JDBC代码
+5. 由于dao的实现类存在重复代码和硬编码问题，所以采用代理模式来为dao创建接⼝的代理对象并通过getMappper加载并解析mapper配置
 
 #### 参与贡献
 

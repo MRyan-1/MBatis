@@ -1,18 +1,11 @@
-
 import dao.IUserDao;
 import dao.UserDaoImpl;
-import io.Resource;
 import org.dom4j.DocumentException;
 import org.junit.Test;
 import pojo.User;
-import sqlSession.SqlSession;
-import sqlSession.SqlSessionFactory;
-import sqlSession.SqlSessionFactoryBuilder;
-
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyVetoException;
-import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,8 +22,8 @@ public class MyBatisTest {
     public void TEST_QUERY_ONE() throws DocumentException, PropertyVetoException, SQLException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
         //调用
         User user = new User();
-        user.setId(2);
-        user.setUsername("MRyan");
+        user.setId(1);
+        user.setUsername("lucy");
         IUserDao userDao = UserDaoImpl.getSqlSession().getMapper(IUserDao.class);
         User userByCondition = userDao.findByCondition(user);
         //findByCondition 按照条件查询
@@ -52,8 +45,8 @@ public class MyBatisTest {
     public void Test_update() throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException {
         IUserDao userDao = UserDaoImpl.getSqlSession().getMapper(IUserDao.class);
         User user = new User();
-        user.setId(2);
-        user.setUsername("TEST");
+        user.setId(1);
+        user.setUsername("MRyan");
         Integer update = userDao.update(user);
         System.out.println("更新操作");
         System.out.println(update);
@@ -68,7 +61,7 @@ public class MyBatisTest {
     public void TEST_DELETE() throws PropertyVetoException, SQLException, DocumentException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
         IUserDao userDao = UserDaoImpl.getSqlSession().getMapper(IUserDao.class);
         User user = new User();
-        user.setId(2);
+        user.setId(1);
         Integer delete = userDao.delete(user);
         System.out.println("删除操作");
         System.out.println(delete);

@@ -36,9 +36,11 @@ public class DefaultSqlSession implements SqlSession {
         if (objects.size() == 1) {
             return (T) objects.get(0);
         } else {
-            throw new RuntimeException("查询结果为空/返回结果过多");
+            throw new RuntimeException("The query result is empty or has too many results");
         }
     }
+
+
 
     @Override
     public <T> T getMapper(Class<?> mapperClass) {

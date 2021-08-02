@@ -47,4 +47,34 @@ public class MyBatisTest {
         allUserList.forEach(item -> System.out.println(item.toString()));
     }
 
+
+    @Test
+    public void Test_update() throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException {
+        IUserDao userDao = UserDaoImpl.getSqlSession().getMapper(IUserDao.class);
+        User user = new User();
+        user.setId(2);
+        user.setUsername("TEST");
+        Integer update = userDao.update(user);
+        System.out.println("更新操作");
+        System.out.println(update);
+        System.out.println("findByCondition 按照条件查询");
+        User userByCondition = userDao.findByCondition(user);
+        //findByCondition 按照条件查询
+        System.out.println("findByCondition 按照条件查询");
+        System.out.println(userByCondition.toString());
+    }
+
+    @Test
+    public void TEST_DELETE() throws PropertyVetoException, SQLException, DocumentException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
+        IUserDao userDao = UserDaoImpl.getSqlSession().getMapper(IUserDao.class);
+        User user = new User();
+        user.setId(2);
+        Integer delete = userDao.delete(user);
+        System.out.println("删除操作");
+        System.out.println(delete);
+        List<User> allUserList = userDao.findAll();
+        //findAll 查询所有
+        System.out.println("findAll 查询所有");
+        allUserList.forEach(item -> System.out.println(item.toString()));
+    }
 }

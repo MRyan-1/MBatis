@@ -1,5 +1,6 @@
 
 import dao.IUserDao;
+import dao.UserDaoImpl;
 import io.Resource;
 import org.dom4j.DocumentException;
 import org.junit.Test;
@@ -25,28 +26,25 @@ import java.util.List;
 public class MyBatisTest {
 
     @Test
-    public void test() throws DocumentException, PropertyVetoException, SQLException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
-        InputStream inputStream = Resource.getResourceAsSteam("sqlMapConfig.xml");
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession = sqlSessionFactory.openSession();
+    public void TEST_QUERY_ONE() throws DocumentException, PropertyVetoException, SQLException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
         //调用
         User user = new User();
         user.setId(2);
         user.setUsername("MRyan");
-       /*  List<User> userList = sqlSession.selectList("user.selectList", user);
-        for (User user1 : userList) {
-            System.out.println(user1.toString());
-        }*/
-        IUserDao userDao = sqlSession.getMapper(IUserDao.class);
-        List<User> allUserList = userDao.findAll();
+        IUserDao userDao = UserDaoImpl.getSqlSession().getMapper(IUserDao.class);
         User userByCondition = userDao.findByCondition(user);
-        //findAll 查询所有
-        System.out.println("findAll 查询所有");
-        allUserList.forEach(item -> System.out.println(item.toString()));
         //findByCondition 按照条件查询
         System.out.println("findByCondition 按照条件查询");
         System.out.println(userByCondition.toString());
     }
 
+    @Test
+    public void TEST_QUERY_LIST() throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, IntrospectionException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException {
+        IUserDao userDao = UserDaoImpl.getSqlSession().getMapper(IUserDao.class);
+        List<User> allUserList = userDao.findAll();
+        //findAll 查询所有
+        System.out.println("findAll 查询所有");
+        allUserList.forEach(item -> System.out.println(item.toString()));
+    }
 
 }

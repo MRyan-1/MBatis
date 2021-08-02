@@ -26,8 +26,7 @@ public class DefaultSqlSession implements SqlSession {
     public <E> List<E> selectList(String statementId, Object... params) throws SQLException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
         SimpleExecutor simpleExecutor = new SimpleExecutor();
         MapperStatement mapperStatement = configuration.getMapperStatementMap().get(statementId);
-        List<Object> list = simpleExecutor.query(configuration, mapperStatement, params);
-        return (List<E>) list;
+        return (List<E>) simpleExecutor.query(configuration, mapperStatement, params);
     }
 
     @Override
@@ -40,6 +39,20 @@ public class DefaultSqlSession implements SqlSession {
         }
     }
 
+
+    @Override
+    public Integer delete(String statementId, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException {
+        SimpleExecutor simpleExecutor = new SimpleExecutor();
+        MapperStatement mapperStatement = configuration.getMapperStatementMap().get(statementId);
+        return simpleExecutor.update(configuration, mapperStatement, params);
+    }
+
+    @Override
+    public Integer update(String statementId, Object... params) throws SQLException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
+        SimpleExecutor simpleExecutor = new SimpleExecutor();
+        MapperStatement mapperStatement = configuration.getMapperStatementMap().get(statementId);
+        return simpleExecutor.delete(configuration, mapperStatement, params);
+    }
 
 
     @Override
@@ -57,6 +70,15 @@ public class DefaultSqlSession implements SqlSession {
                 Type genericReturnType = method.getGenericReturnType();
                 if (genericReturnType instanceof ParameterizedType) {
                     return selectList(statementId, args);
+                }
+                MapperStatement mapperStatement = configuration.getMapperStatementMap().get(statementId);
+                //update
+                if (mapperStatement.getSql().startsWith("update")) {
+                    return update(statementId, args);
+                }
+                //delete
+                if (mapperStatement.getSql().startsWith("delete")) {
+                    return delete(statementId, args);
                 }
                 return selectOne(statementId, args);
             }

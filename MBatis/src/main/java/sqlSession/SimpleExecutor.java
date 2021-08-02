@@ -25,7 +25,7 @@ import java.util.List;
 public class SimpleExecutor implements Executor {
 
     @Override
-    public <T> List<T> query(Configuration configuration, MapperStatement mapperStatement, Object... parpams) throws SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException, ClassNotFoundException {
+    public <T> List<T> query(Configuration configuration, MapperStatement mapperStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException, ClassNotFoundException {
         //1、 注册驱动，创建连接
         Connection connection = configuration.getDataSource().getConnection();
         //2、 获取Sql语句  针对sql语句#{} 转换为？  并将#{}值进行解析存储
@@ -43,7 +43,7 @@ public class SimpleExecutor implements Executor {
             Field field = paramterType.getDeclaredField(content);
             field.setAccessible(true);
             //参数的值
-            Object o = field.get(parpams[0]);
+            Object o = field.get(params[0]);
             //给占位符赋值
             preparedStatement.setObject(i + 1, o);
         }
@@ -73,6 +73,62 @@ public class SimpleExecutor implements Executor {
         }
 
         return (List<T>) results;
+    }
+
+    @Override
+    public Integer update(Configuration configuration, MapperStatement mapperStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException {
+        Connection connection = configuration.getDataSource().getConnection();
+        String sql = mapperStatement.getSql();
+        BoundSql boundSql = getBoundSql(sql);
+        // 3.获取预处理对象：preparedStatement
+        PreparedStatement preparedStatement = connection.prepareStatement(boundSql.getSqlText());
+        // 4. 设置参数
+        //获取到了参数的全路径
+        Class<?> parameterType = mapperStatement.getParameterType();
+        List<ParameterMapping> parameterMappingList = boundSql.getParameterMappingList();
+        for (int i = 0; i < parameterMappingList.size(); i++) {
+            ParameterMapping parameterMapping = parameterMappingList.get(i);
+            String content = parameterMapping.getContent();
+            //反射
+            Field declaredField = parameterType.getDeclaredField(content);
+            //暴力访问
+            declaredField.setAccessible(true);
+            Object o = declaredField.get(params[0]);
+            preparedStatement.setObject(i + 1, o);
+        }
+        // 5. 执行sql
+        return preparedStatement.executeUpdate();
+    }
+
+    @Override
+    public Integer delete(Configuration configuration, MapperStatement mapperStatement, Object... params) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
+        // 1. 注册驱动，获取连接
+        Connection connection = configuration.getDataSource().getConnection();
+        String sql = mapperStatement.getSql();
+        BoundSql boundSql = getBoundSql(sql);
+        // 3.获取预处理对象：preparedStatement
+        PreparedStatement preparedStatement = connection.prepareStatement(boundSql.getSqlText());
+        Class<?> parameterType = mapperStatement.getParameterType();
+        if (parameterType == Integer.class) {
+            preparedStatement.setObject(1, params[0]);
+        } else {
+            List<ParameterMapping> parameterMappingList = boundSql.getParameterMappingList();
+            for (int i = 0; i < parameterMappingList.size(); i++) {
+                ParameterMapping parameterMapping = parameterMappingList.get(i);
+                String content = parameterMapping.getContent();
+
+                //反射
+                Field declaredField = parameterType.getDeclaredField(content);
+                //暴力访问
+                declaredField.setAccessible(true);
+                Object o = declaredField.get(params[0]);
+
+                preparedStatement.setObject(i + 1, o);
+            }
+        }
+        // 5. 执行sql
+        return preparedStatement.executeUpdate();
+
     }
 
     private Class<?> getClassType(String parameterType) throws ClassNotFoundException {

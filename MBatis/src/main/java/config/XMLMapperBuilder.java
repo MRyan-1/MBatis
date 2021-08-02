@@ -1,6 +1,5 @@
 package config;
 
-import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
@@ -33,8 +32,26 @@ public class XMLMapperBuilder {
     public void parse(InputStream resourceAsSteam) throws DocumentException, ClassNotFoundException {
         Document document = new SAXReader().read(resourceAsSteam);
         Element rootElement = document.getRootElement();
-        List<Element> elementList = rootElement.selectNodes("//select");
         String namespace = rootElement.attributeValue("namespace");
+        //解析构建查询相关
+        buildMapperStatementMap(rootElement, namespace, "//select");
+        //解析构建更新相关
+        buildMapperStatementMap(rootElement, namespace, "//update");
+        //解析构建删除相关
+        buildMapperStatementMap(rootElement, namespace, "//delete");
+
+    }
+
+    /**
+     * 解析Mapper.xml 标签 构建相应MapperStatement
+     *
+     * @param rootElement
+     * @param namespace
+     * @param selectNodes
+     * @throws ClassNotFoundException
+     */
+    private void buildMapperStatementMap(Element rootElement, String namespace, String selectNodes) throws ClassNotFoundException {
+        List<Element> elementList = rootElement.selectNodes(selectNodes);
         for (Element element : elementList) {
             String id = element.attributeValue("id");
             String resultType = element.attributeValue("resultType");
@@ -50,9 +67,9 @@ public class XMLMapperBuilder {
         }
     }
 
-    private Class<?> getClassType(String paramterType) throws ClassNotFoundException {
-        if (paramterType != null) {
-            return Class.forName(paramterType);
+    private Class<?> getClassType(String parameterType) throws ClassNotFoundException {
+        if (parameterType != null) {
+            return Class.forName(parameterType);
         }
         return null;
     }

@@ -31,4 +31,20 @@ public interface IUserDao {
      * @return
      */
     public User findByCondition(User user) throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, IntrospectionException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException;
+
+    /**
+     * 根据条件更新
+     *
+     * @param user
+     * @return
+     */
+    public Integer update(User user) throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException;
+
+    /**
+     * 根据条件删除
+     *
+     * @param user
+     * @return
+     */
+    public Integer delete(User user) throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException;
 }

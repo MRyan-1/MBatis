@@ -24,17 +24,29 @@ public class UserDaoImpl implements IUserDao {
 
     @Override
     public List<User> findAll() throws SQLException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException, PropertyVetoException, DocumentException {
-        InputStream inputStream = Resource.getResourceAsSteam("sqlMapConfig.xml");
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        return sqlSession.selectList("user.selectList");
+        return getSqlSession().selectList("user.selectList");
     }
+
 
     @Override
     public User findByCondition(User user) throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, IntrospectionException, NoSuchFieldException, InvocationTargetException, IllegalAccessException, InstantiationException {
+        return getSqlSession().selectOne("user.selectList", user);
+    }
+
+    @Override
+    public Integer update(User user) throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException {
+        return getSqlSession().update("user.update", user);
+    }
+
+    @Override
+    public Integer delete(User user) throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException {
+        return getSqlSession().delete("user.delete", user);
+    }
+
+
+    public static SqlSession getSqlSession() throws DocumentException, PropertyVetoException, ClassNotFoundException {
         InputStream inputStream = Resource.getResourceAsSteam("sqlMapConfig.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        return sqlSession.selectOne("user.selectList", user);
+        return sqlSessionFactory.openSession();
     }
 }

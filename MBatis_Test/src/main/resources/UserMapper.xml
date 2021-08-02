@@ -8,4 +8,11 @@
         select * from user where id= #{id} and username= #{username}
     </select>
 
+    <update id="update" resultType="java.lang.Integer" parameterType="pojo.User">
+        update user set username=#{username} where id=#{id}
+    </update>
+
+    <delete id="delete" resultType="java.lang.Integer" parameterType="pojo.User">
+        delete from user where id=#{id}
+    </delete>
 </mapper>

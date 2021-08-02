@@ -25,33 +25,12 @@ import java.util.List;
 public class SimpleExecutor implements Executor {
 
     @Override
-    public <T> List<T> query(Configuration configuration, MapperStatement mapperStatement, Object... parpams) throws SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException, ClassNotFoundException {
-        //1、 注册驱动，创建连接
-        Connection connection = configuration.getDataSource().getConnection();
-        //2、 获取Sql语句  针对sql语句#{} 转换为？  并将#{}值进行解析存储
-        //例如 select * from user  where id=#{id}  转化select * from user where id=?
-        BoundSql boundSql = getBoundSql(mapperStatement.getSql());
-        Class<?> paramterType = mapperStatement.getParameterType();
-        //3、 获取预处理对象 preparedStatement
-        PreparedStatement preparedStatement = connection.prepareStatement(boundSql.getSqlText());
-        //4、 设置参数  获取传⼊参数类型
-        List<ParameterMapping> parameterMappingList = boundSql.getParameterMappingList();
-        for (int i = 0; i < parameterMappingList.size(); i++) {
-            ParameterMapping parameterMapping = parameterMappingList.get(i);
-            String content = parameterMapping.getContent();
-            //反射
-            Field field = paramterType.getDeclaredField(content);
-            field.setAccessible(true);
-            //参数的值
-            Object o = field.get(parpams[0]);
-            //给占位符赋值
-            preparedStatement.setObject(i + 1, o);
-        }
+    public <T> List<T> query(Configuration configuration, MapperStatement mapperStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException, ClassNotFoundException {
+        PreparedStatement preparedStatement = getPreparedStatement(configuration, mapperStatement, params);
         //5、 执行sql
         ResultSet resultSet = preparedStatement.executeQuery();
         Class<?> resultType = mapperStatement.getResultType();
         ArrayList<T> results = new ArrayList<T>();
-
         //5、 封装结果返回集
         while (resultSet.next()) {
             ResultSetMetaData metaData = resultSet.getMetaData();
@@ -71,9 +50,47 @@ public class SimpleExecutor implements Executor {
             }
             results.add(o);
         }
-
         return (List<T>) results;
     }
+
+
+    @Override
+    public Integer update(Configuration configuration, MapperStatement mapperStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException {
+        // 5. 执行sql
+        return getPreparedStatement(configuration, mapperStatement, params).executeUpdate();
+    }
+
+
+    @Override
+    public Integer delete(Configuration configuration, MapperStatement mapperStatement, Object... params) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
+        // 5. 执行sql
+        return getPreparedStatement(configuration, mapperStatement, params).executeUpdate();
+    }
+
+
+    private PreparedStatement getPreparedStatement(Configuration configuration, MapperStatement mapperStatement, Object... param) throws SQLException, NoSuchFieldException, IllegalAccessException {
+        Connection connection = configuration.getDataSource().getConnection();
+        String sql = mapperStatement.getSql();
+        BoundSql boundSql = getBoundSql(sql);
+        // 3.获取预处理对象：preparedStatement
+        PreparedStatement preparedStatement = connection.prepareStatement(boundSql.getSqlText());
+        // 4. 设置参数
+        //获取到了参数的全路径
+        Class<?> parameterType = mapperStatement.getParameterType();
+        List<ParameterMapping> parameterMappingList = boundSql.getParameterMappingList();
+        for (int i = 0; i < parameterMappingList.size(); i++) {
+            ParameterMapping parameterMapping = parameterMappingList.get(i);
+            String content = parameterMapping.getContent();
+            //反射
+            Field declaredField = parameterType.getDeclaredField(content);
+            //暴力访问
+            declaredField.setAccessible(true);
+            Object o = declaredField.get(param[0]);
+            preparedStatement.setObject(i + 1, o);
+        }
+        return preparedStatement;
+    }
+
 
     private Class<?> getClassType(String parameterType) throws ClassNotFoundException {
         if (parameterType != null) {

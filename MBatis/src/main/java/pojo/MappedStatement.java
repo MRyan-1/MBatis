@@ -31,7 +31,6 @@ public class MappedStatement implements Serializable {
     private Class<?> parameterType;
 
 
-
     public String getId() {
         return id;
     }

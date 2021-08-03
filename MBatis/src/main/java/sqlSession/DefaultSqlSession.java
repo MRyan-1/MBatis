@@ -24,7 +24,7 @@ public class DefaultSqlSession implements SqlSession {
 
     @Override
     public <E> List<E> selectList(String statementId, Object... params) throws SQLException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
-        SimpleExecutor simpleExecutor = new SimpleExecutor();
+        Executor simpleExecutor = new SimpleExecutor();
         MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
         return (List<E>) simpleExecutor.query(configuration, mappedStatement, params);
     }
@@ -42,23 +42,23 @@ public class DefaultSqlSession implements SqlSession {
 
     @Override
     public Integer delete(String statementId, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException {
-        SimpleExecutor simpleExecutor = new SimpleExecutor();
+        Executor simpleExecutor = new SimpleExecutor();
         MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
         return simpleExecutor.update(configuration, mappedStatement, params);
     }
 
     @Override
     public Integer update(String statementId, Object... params) throws SQLException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
-        SimpleExecutor simpleExecutor = new SimpleExecutor();
+        Executor simpleExecutor = new SimpleExecutor();
         MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
         return simpleExecutor.delete(configuration, mappedStatement, params);
     }
 
     @Override
     public Integer add(String statementId, Object... params) throws SQLException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
-        SimpleExecutor simpleExecutor = new SimpleExecutor();
+        Executor executor = new SimpleExecutor();
         MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
-        return simpleExecutor.add(configuration, mappedStatement, params);
+        return executor.add(configuration, mappedStatement, params);
     }
 
 

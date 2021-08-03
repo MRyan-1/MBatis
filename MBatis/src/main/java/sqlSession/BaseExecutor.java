@@ -26,9 +26,9 @@ public abstract class BaseExecutor implements Executor {
         Connection connection = configuration.getDataSource().getConnection();
         String sql = mappedStatement.getSql();
         BoundSql boundSql = getBoundSql(sql);
-        // 3.获取预处理对象：preparedStatement
+        // 1.获取预处理对象：preparedStatement
         PreparedStatement preparedStatement = connection.prepareStatement(boundSql.getSqlText());
-        // 4. 设置参数
+        // 2. 设置参数
         //获取到了参数的全路径
         Class<?> parameterType = mappedStatement.getParameterType();
         List<ParameterMapping> parameterMappingList = boundSql.getParameterMappingList();

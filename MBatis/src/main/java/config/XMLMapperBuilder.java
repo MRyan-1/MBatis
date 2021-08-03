@@ -39,6 +39,9 @@ public class XMLMapperBuilder {
         buildMapperStatementMap(rootElement, namespace, "//update");
         //解析构建删除相关
         buildMapperStatementMap(rootElement, namespace, "//delete");
+        //解析构建新增相关
+        buildMapperStatementMap(rootElement, namespace, "//insert");
+
 
     }
 

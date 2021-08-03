@@ -1,5 +1,6 @@
 package sqlSession;
 
+import jdk.nashorn.internal.runtime.regexp.joni.Config;
 import pojo.Configuration;
 import pojo.MappedStatement;
 
@@ -21,4 +22,6 @@ public interface Executor {
     public Integer update(Configuration configuration, MappedStatement mappedStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException;
 
     public Integer delete(Configuration configuration, MappedStatement mappedStatement, Object... params) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException;
+
+    public Integer add(Configuration configuration, MappedStatement mappedStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException;
 }

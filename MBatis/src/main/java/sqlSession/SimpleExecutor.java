@@ -61,4 +61,10 @@ public class SimpleExecutor extends BaseExecutor {
         return getPreparedStatement(configuration, mappedStatement, params).executeUpdate();
     }
 
+    @Override
+    public Integer add(Configuration configuration, MappedStatement mappedStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException {
+        return getPreparedStatement(configuration, mappedStatement, params).executeUpdate();
+    }
+
+
 }

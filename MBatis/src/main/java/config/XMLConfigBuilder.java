@@ -46,9 +46,20 @@ public class XMLConfigBuilder {
         dataSource.setUser(properties.getProperty("username"));
         dataSource.setPassword(properties.getProperty("password"));
         configuration.setDataSource(dataSource);
+        mapperElement(rootElement.selectNodes("//mapper"));
+        return configuration;
+    }
 
+
+    /**
+     * 解析mapper标签
+     *
+     * @param mapperElements
+     * @throws DocumentException
+     * @throws ClassNotFoundException
+     */
+    private void mapperElement(List<Element> mapperElements) throws DocumentException, ClassNotFoundException {
         //解析mapper.xml 拿到路径
-        List<Element> mapperElements = rootElement.selectNodes("//mapper");
         XMLMapperBuilder xmlMapperBuilder = new XMLMapperBuilder(configuration);
         for (Element mapperElement : mapperElements) {
             String mapperPath = mapperElement.attributeValue("resource");
@@ -56,6 +67,5 @@ public class XMLConfigBuilder {
                     Resource.getResourceAsSteam(mapperPath);
             xmlMapperBuilder.parse(resourceAsSteam);
         }
-        return configuration;
     }
 }

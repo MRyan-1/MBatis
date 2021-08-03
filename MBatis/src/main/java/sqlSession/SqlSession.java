@@ -54,6 +54,17 @@ public interface SqlSession {
      */
     public Integer update(String statementId, Object... params) throws SQLException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException;
 
+    /**
+     * 新增
+     * @param statementId
+     * @param params
+     * @return
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws ClassNotFoundException
+     * @throws IllegalAccessException
+     */
+    public Integer add(String statementId, Object... params) throws SQLException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException;
 
     /**
      * 采用代理模式来为dao创建接⼝的代理对象 并返回

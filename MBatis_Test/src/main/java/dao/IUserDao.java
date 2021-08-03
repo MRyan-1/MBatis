@@ -47,4 +47,18 @@ public interface IUserDao {
      * @return
      */
     public Integer delete(User user) throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException;
+
+    /**
+     * 新增
+     *
+     * @param user
+     * @return
+     * @throws PropertyVetoException
+     * @throws DocumentException
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
+     */
+    public Integer insert(User user) throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException;
 }

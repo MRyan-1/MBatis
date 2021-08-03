@@ -43,6 +43,11 @@ public class UserDaoImpl implements IUserDao {
         return getSqlSession().delete("user.delete", user);
     }
 
+    @Override
+    public Integer insert(User user) throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException {
+        return getSqlSession().delete("user.insert", user);
+    }
+
 
     public static SqlSession getSqlSession() throws DocumentException, PropertyVetoException, ClassNotFoundException {
         InputStream inputStream = Resource.getResourceAsSteam("sqlMapConfig.xml");

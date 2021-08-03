@@ -42,7 +42,7 @@ public class MyBatisTest {
 
 
     @Test
-    public void Test_update() throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException {
+    public void TEST_UPDATE() throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException {
         IUserDao userDao = UserDaoImpl.getSqlSession().getMapper(IUserDao.class);
         User user = new User();
         user.setId(1);
@@ -50,6 +50,22 @@ public class MyBatisTest {
         Integer update = userDao.update(user);
         System.out.println("更新操作");
         System.out.println(update);
+        System.out.println("findByCondition 按照条件查询");
+        User userByCondition = userDao.findByCondition(user);
+        //findByCondition 按照条件查询
+        System.out.println("findByCondition 按照条件查询");
+        System.out.println(userByCondition.toString());
+    }
+
+    @Test
+    public void TEST_INSERT() throws PropertyVetoException, DocumentException, ClassNotFoundException, SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException {
+        IUserDao userDao = UserDaoImpl.getSqlSession().getMapper(IUserDao.class);
+        User user = new User();
+        user.setId(2);
+        user.setUsername("MRyan2");
+        Integer add = userDao.insert(user);
+        System.out.println("新增操作");
+        System.out.println(add);
         System.out.println("findByCondition 按照条件查询");
         User userByCondition = userDao.findByCondition(user);
         //findByCondition 按照条件查询

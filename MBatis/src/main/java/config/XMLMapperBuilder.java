@@ -5,7 +5,7 @@ import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import pojo.Configuration;
-import pojo.MapperStatement;
+import pojo.MappedStatement;
 
 import java.io.InputStream;
 import java.util.List;
@@ -39,6 +39,9 @@ public class XMLMapperBuilder {
         buildMapperStatementMap(rootElement, namespace, "//update");
         //解析构建删除相关
         buildMapperStatementMap(rootElement, namespace, "//delete");
+        //解析构建新增相关
+        buildMapperStatementMap(rootElement, namespace, "//insert");
+
 
     }
 
@@ -57,13 +60,13 @@ public class XMLMapperBuilder {
             String resultType = element.attributeValue("resultType");
             String parameterType = element.attributeValue("parameterType");
             String sqlText = element.getTextTrim();
-            MapperStatement mapperStatement = new MapperStatement();
-            mapperStatement.setId(id);
-            mapperStatement.setParameterType(getClassType(parameterType));
-            mapperStatement.setSql(sqlText);
-            mapperStatement.setResultType(getClassType(resultType));
+            MappedStatement mappedStatement = new MappedStatement();
+            mappedStatement.setId(id);
+            mappedStatement.setParameterType(getClassType(parameterType));
+            mappedStatement.setSql(sqlText);
+            mappedStatement.setResultType(getClassType(resultType));
             String key = namespace + "." + id;
-            configuration.getMapperStatementMap().put(key, mapperStatement);
+            configuration.getMappedStatementMap().put(key, mappedStatement);
         }
     }
 

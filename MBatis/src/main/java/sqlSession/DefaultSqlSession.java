@@ -1,7 +1,7 @@
 package sqlSession;
 
 import pojo.Configuration;
-import pojo.MapperStatement;
+import pojo.MappedStatement;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.*;
@@ -25,8 +25,8 @@ public class DefaultSqlSession implements SqlSession {
     @Override
     public <E> List<E> selectList(String statementId, Object... params) throws SQLException, IntrospectionException, NoSuchFieldException, ClassNotFoundException, InvocationTargetException, IllegalAccessException, InstantiationException {
         SimpleExecutor simpleExecutor = new SimpleExecutor();
-        MapperStatement mapperStatement = configuration.getMapperStatementMap().get(statementId);
-        return (List<E>) simpleExecutor.query(configuration, mapperStatement, params);
+        MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
+        return (List<E>) simpleExecutor.query(configuration, mappedStatement, params);
     }
 
     @Override
@@ -43,15 +43,22 @@ public class DefaultSqlSession implements SqlSession {
     @Override
     public Integer delete(String statementId, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException {
         SimpleExecutor simpleExecutor = new SimpleExecutor();
-        MapperStatement mapperStatement = configuration.getMapperStatementMap().get(statementId);
-        return simpleExecutor.update(configuration, mapperStatement, params);
+        MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
+        return simpleExecutor.update(configuration, mappedStatement, params);
     }
 
     @Override
     public Integer update(String statementId, Object... params) throws SQLException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
         SimpleExecutor simpleExecutor = new SimpleExecutor();
-        MapperStatement mapperStatement = configuration.getMapperStatementMap().get(statementId);
-        return simpleExecutor.delete(configuration, mapperStatement, params);
+        MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
+        return simpleExecutor.delete(configuration, mappedStatement, params);
+    }
+
+    @Override
+    public Integer add(String statementId, Object... params) throws SQLException, NoSuchFieldException, ClassNotFoundException, IllegalAccessException {
+        SimpleExecutor simpleExecutor = new SimpleExecutor();
+        MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
+        return simpleExecutor.add(configuration, mappedStatement, params);
     }
 
 
@@ -71,15 +78,20 @@ public class DefaultSqlSession implements SqlSession {
                 if (genericReturnType instanceof ParameterizedType) {
                     return selectList(statementId, args);
                 }
-                MapperStatement mapperStatement = configuration.getMapperStatementMap().get(statementId);
+                MappedStatement mappedStatement = configuration.getMappedStatementMap().get(statementId);
                 //update
-                if (mapperStatement.getSql().startsWith("update")) {
+                if (mappedStatement.getSql().startsWith("update")) {
                     return update(statementId, args);
                 }
                 //delete
-                if (mapperStatement.getSql().startsWith("delete")) {
+                if (mappedStatement.getSql().startsWith("delete")) {
                     return delete(statementId, args);
                 }
+                //add
+                if (mappedStatement.getSql().startsWith("insert")) {
+                    return add(statementId, args);
+                }
+                //selectOne
                 return selectOne(statementId, args);
             }
         });

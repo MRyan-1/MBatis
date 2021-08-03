@@ -15,4 +15,8 @@
     <delete id="delete" resultType="java.lang.Integer" parameterType="pojo.User">
         delete from user where id=#{id}
     </delete>
+
+    <insert id="insert" resultType="java.lang.Integer" parameterType="pojo.User">
+        insert into user (id,username) values (#{id},#{username})
+    </insert>
 </mapper>

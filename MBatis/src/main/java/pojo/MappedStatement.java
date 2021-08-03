@@ -8,7 +8,7 @@ import java.io.Serializable;
  * @Date 2021/7/27 23:03
  * @Version 1.0
  */
-public class MapperStatement implements Serializable {
+public class MappedStatement implements Serializable {
 
     /**
      * id标识
@@ -29,6 +29,8 @@ public class MapperStatement implements Serializable {
      * 参数值类型
      */
     private Class<?> parameterType;
+
+
 
     public String getId() {
         return id;

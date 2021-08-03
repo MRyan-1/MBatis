@@ -17,7 +17,7 @@ public class Configuration {
     /**
      * Key:statementId->namespace.id
      */
-    private Map<String, MapperStatement> mapperStatementMap = new HashMap<>();
+    private Map<String, MappedStatement> mappedStatementMap = new HashMap<>();
 
     public DataSource getDataSource() {
         return dataSource;
@@ -27,11 +27,11 @@ public class Configuration {
         this.dataSource = dataSource;
     }
 
-    public Map<String, MapperStatement> getMapperStatementMap() {
-        return mapperStatementMap;
+    public Map<String, MappedStatement> getMappedStatementMap() {
+        return mappedStatementMap;
     }
 
-    public void setMapperStatementMap(Map<String, MapperStatement> mapperStatementMap) {
-        this.mapperStatementMap = mapperStatementMap;
+    public void setMappedStatementMap(Map<String, MappedStatement> mappedStatementMap) {
+        this.mappedStatementMap = mappedStatementMap;
     }
 }

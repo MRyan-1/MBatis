@@ -1,7 +1,7 @@
 package sqlSession;
 
 import pojo.Configuration;
-import pojo.MapperStatement;
+import pojo.MappedStatement;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;
@@ -16,9 +16,9 @@ import java.util.List;
  */
 public interface Executor {
 
-    public <T> List<T> query(Configuration configuration, MapperStatement mapperStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException, ClassNotFoundException;
+    public <T> List<T> query(Configuration configuration, MappedStatement mappedStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException, IntrospectionException, InvocationTargetException, InstantiationException, ClassNotFoundException;
 
-    public Integer update(Configuration configuration, MapperStatement mapperStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException;
+    public Integer update(Configuration configuration, MappedStatement mappedStatement, Object... params) throws SQLException, NoSuchFieldException, IllegalAccessException;
 
-    public Integer delete(Configuration configuration, MapperStatement mapperStatement, Object... params) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException;
+    public Integer delete(Configuration configuration, MappedStatement mappedStatement, Object... params) throws SQLException, ClassNotFoundException, NoSuchFieldException, IllegalAccessException;
 }

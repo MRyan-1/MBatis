@@ -1,7 +1,7 @@
 package dao;
 
 import org.dom4j.DocumentException;
-import pojo.User;
+import com.mryan.pojo.User;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyVetoException;

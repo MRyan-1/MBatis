@@ -1,4 +1,4 @@
-package sqlSession;
+package com.mryan.sqlSession;
 
 /**
  * @description： SqlSessionFactory

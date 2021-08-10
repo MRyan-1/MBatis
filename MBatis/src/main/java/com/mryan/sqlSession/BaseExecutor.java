@@ -1,11 +1,11 @@
-package sqlSession;
+package com.mryan.sqlSession;
 
-import config.BoundSql;
-import pojo.Configuration;
-import pojo.MappedStatement;
-import utils.GenericTokenParser;
-import utils.ParameterMapping;
-import utils.ParameterMappingTokenHandler;
+import com.mryan.config.BoundSql;
+import com.mryan.pojo.Configuration;
+import com.mryan.pojo.MappedStatement;
+import com.mryan.utils.GenericTokenParser;
+import com.mryan.utils.ParameterMapping;
+import com.mryan.utils.ParameterMappingTokenHandler;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;

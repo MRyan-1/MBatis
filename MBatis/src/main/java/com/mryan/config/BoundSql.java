@@ -1,6 +1,6 @@
-package config;
+package com.mryan.config;
 
-import utils.ParameterMapping;
+import com.mryan.utils.ParameterMapping;
 
 import java.util.List;
 

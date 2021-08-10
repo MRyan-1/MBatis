@@ -1,13 +1,12 @@
-package config;
+package com.mryan.config;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
-import io.Resource;
-import org.dom4j.Attribute;
+import com.mryan.io.Resource;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import pojo.Configuration;
+import com.mryan.pojo.Configuration;
 
 import java.beans.PropertyVetoException;
 import java.io.InputStream;

@@ -1,6 +1,6 @@
-package sqlSession;
+package com.mryan.sqlSession;
 
-import pojo.Configuration;
+import com.mryan.pojo.Configuration;
 
 /**
  * @description： DefaultSqlSessionFactory

@@ -1,4 +1,4 @@
-package sqlSession;
+package com.mryan.sqlSession;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;

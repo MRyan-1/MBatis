@@ -1,8 +1,7 @@
-package sqlSession;
+package com.mryan.sqlSession;
 
-import jdk.nashorn.internal.runtime.regexp.joni.Config;
-import pojo.Configuration;
-import pojo.MappedStatement;
+import com.mryan.pojo.Configuration;
+import com.mryan.pojo.MappedStatement;
 
 import java.beans.IntrospectionException;
 import java.lang.reflect.InvocationTargetException;

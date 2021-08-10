@@ -1,22 +1,22 @@
 <mapper namespace="dao.IUserDao">
     <!--sql的唯一标识 ：namespace.id 组成 statementId-->
-    <select id="findAll" resultType="pojo.User">
+    <select id="findAll" resultType="com.mryan.pojo.User">
         select * from user
     </select>
 
-    <select id="findByCondition" resultType="pojo.User" parameterType="pojo.User">
+    <select id="findByCondition" resultType="com.mryan.pojo.User" parameterType="com.mryan.pojo.User">
         select * from user where id= #{id} and username= #{username}
     </select>
 
-    <update id="update" resultType="java.lang.Integer" parameterType="pojo.User">
+    <update id="update" resultType="java.lang.Integer" parameterType="com.mryan.pojo.User">
         update user set username=#{username} where id=#{id}
     </update>
 
-    <delete id="delete" resultType="java.lang.Integer" parameterType="pojo.User">
+    <delete id="delete" resultType="java.lang.Integer" parameterType="com.mryan.pojo.User">
         delete from user where id=#{id}
     </delete>
 
-    <insert id="insert" resultType="java.lang.Integer" parameterType="pojo.User">
+    <insert id="insert" resultType="java.lang.Integer" parameterType="com.mryan.pojo.User">
         insert into user (id,username) values (#{id},#{username})
     </insert>
 </mapper>

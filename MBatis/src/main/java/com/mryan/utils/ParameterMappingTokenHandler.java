@@ -1,4 +1,4 @@
-package utils;
+package com.mryan.utils;
 
 import java.util.ArrayList;
 import java.util.List;

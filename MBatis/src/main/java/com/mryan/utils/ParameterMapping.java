@@ -1,4 +1,4 @@
-package utils;
+package com.mryan.utils;
 
 public class ParameterMapping {
 

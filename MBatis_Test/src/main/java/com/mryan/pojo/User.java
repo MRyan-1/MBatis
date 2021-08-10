@@ -1,4 +1,4 @@
-package pojo;
+package com.mryan.pojo;
 
 /**
  * @description：TODO
@@ -12,6 +12,10 @@ public class User {
 
     private String username;
 
+    private String password;
+
+    private String birthday;
+
     public User() {
     }
 
@@ -20,6 +24,8 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday='" + birthday + '\'' +
                 '}';
     }
 
@@ -37,5 +43,21 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }

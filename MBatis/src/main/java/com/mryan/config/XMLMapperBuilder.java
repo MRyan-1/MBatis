@@ -1,11 +1,11 @@
-package config;
+package com.mryan.config;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
-import pojo.Configuration;
-import pojo.MappedStatement;
+import com.mryan.pojo.Configuration;
+import com.mryan.pojo.MappedStatement;
 
 import java.io.InputStream;
 import java.util.List;

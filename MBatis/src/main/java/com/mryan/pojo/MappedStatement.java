@@ -1,4 +1,4 @@
-package pojo;
+package com.mryan.pojo;
 
 import java.io.Serializable;
 

@@ -1,11 +1,11 @@
 package dao;
 
-import io.Resource;
+import com.mryan.io.Resource;
 import org.dom4j.DocumentException;
-import pojo.User;
-import sqlSession.SqlSession;
-import sqlSession.SqlSessionFactory;
-import sqlSession.SqlSessionFactoryBuilder;
+import com.mryan.pojo.User;
+import com.mryan.sqlSession.SqlSession;
+import com.mryan.sqlSession.SqlSessionFactory;
+import com.mryan.sqlSession.SqlSessionFactoryBuilder;
 
 import java.beans.IntrospectionException;
 import java.beans.PropertyVetoException;

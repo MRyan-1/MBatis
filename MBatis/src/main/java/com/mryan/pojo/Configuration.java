@@ -1,4 +1,4 @@
-package pojo;
+package com.mryan.pojo;
 
 import javax.sql.DataSource;
 import java.util.HashMap;

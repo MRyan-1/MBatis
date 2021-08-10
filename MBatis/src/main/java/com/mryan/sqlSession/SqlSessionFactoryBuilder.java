@@ -1,8 +1,8 @@
-package sqlSession;
+package com.mryan.sqlSession;
 
-import config.XMLConfigBuilder;
+import com.mryan.config.XMLConfigBuilder;
 import org.dom4j.DocumentException;
-import pojo.Configuration;
+import com.mryan.pojo.Configuration;
 
 import java.beans.PropertyVetoException;
 import java.io.InputStream;
